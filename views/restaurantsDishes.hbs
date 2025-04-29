@@ -1,0 +1,193 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Taste DB</title>
+{{!-- <link href="style.css" rel="stylesheet" type="text/css" /> --}}
+</head>
+<body>
+    <header>
+        <h1>Home Page</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/users.">User Database</a></li>
+            <li><a href="/restaurantsDishes">Restaurant and Dishes Database</a></li>
+            <li><a href="/restaurantsAddress">Restaurant Addresses Database</a></li>
+            <li><a href="/reviews">Reviews Database</a></li>
+        </ul>
+    </nav>
+
+{{!-- RESTAURANTS TABLE --}}
+<div id="browse" style="display: block">
+<p><strong>Restaurants</strong></p>
+<table  id = Restaurants-Table border="1" cellpadding="5" >
+    {{!-- Header section --}}
+    <thead>
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr>
+            {{#each data2.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    {{!-- Body section --}}
+    <tbody>
+        {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
+        {{#each data2}}
+        <tr data-value="{{this.RestaurantID}}">
+            <td>{{this.RestaurantID}}</td>
+            <td>{{this.RestaurantName}}</td>
+            <td><a href="#">Edit</a></td>
+            <td><button onclick="deleteRestaurant({{this.RestaurantID}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<script src="./js/delete_restaurant.js"></script>
+<p>&nbsp;</p> 
+{{!-- ADD FORM section --}}
+<form id="add-restaurant-form-ajax">
+    <label for="input-restaurant-name">Restaurant Name: </label>
+    <input type="text" name="input-restaurant-name" id="input-restaurant-name" required>
+    <input type="submit" value="Add Restaurant">
+</form>
+<!-- Include your JavaScript to handle the AJAX request -->
+<!-- Link to the add_restaurant.js script -->
+<script src="/js/add_restaurant.js"></script>
+<p>&nbsp;</p> <!-- browse/add restaurants -->
+
+{{!-- DISHES TABLE --}}
+<p><strong>Dishes</strong></p>
+<table id ="Dishes-Table" border="1" cellpadding="5">
+{{!-- Header section --}}
+    <thead>
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr>
+            {{#each data3.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    {{!-- Body section --}}
+    <tbody>
+        {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
+        {{#each data3}}
+        <tr data-value="{{this.DishID}}">
+            <td>{{this.DishID}}</td>
+            <td>{{this.DishName}}</td>
+            <td>{{this.CuisineType}}</td>
+            <td><a href="#">Edit</a></td>
+            <td><button onclick="deleteDish({{this.DishID}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<script src="./js/delete_dish.js"></script>
+<p>&nbsp;</p> <!-- browse Dishes -->
+
+{{!-- ADD FORM section --}}
+<form id="add-dish-form-ajax">
+    <label for="input-dish-name">Dish Name: </label>
+        <input type="text" name="input-dish-name" id="input-dish-name" required>
+
+    <label for="input-cuisine-type">Cuisine Type: </label>
+        <input type="text" name="input-cuisine-type" id="input-cuisine-type" required>
+
+    <input type="submit" value="Add Dish">
+</form>
+<!-- Include your JavaScript to handle the AJAX request -->
+<!-- Link to the add_restaurant.js script -->
+<script src="/js/add_dish.js"></script>
+<p>&nbsp;</p> <!-- browse/add restaurants -->
+
+{{!-- RESTAURANTS AND DISHES TABLE --}}
+<p><strong>Restaurants/Dishes Junction Table</strong></p>
+<table id ="Restaurants-Dishes-Table" border="1" cellpadding="5">
+
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr>
+            {{#each data1.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    {{!-- Body section --}}
+    <tbody>
+        {{!--  --}}
+        {{#each data1}}
+        <tr data-value="{{this.RestaurantDishID}}">
+            <td>{{this.RestaurantDishID}}</td>
+            <td>{{this.RestaurantID}}</td>            
+            <td>{{this.DishID}}</td>
+            <td><a href="#">Edit</a></td>
+            <td><button onclick="deleteRestaurantDish({{this.RestaurantDishID}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<script src="./js/delete_restaurantsDishes.js"></script>
+<p>&nbsp;</p>
+</div> <!-- browse RestaurantsDishes Intersection Table -->
+{{!-- ADD FORM section --}}
+<form id="add-RestaurantsDishes-form-ajax">
+    <label for="input-restaurant-ID">RestaurantID: </label>
+        <input type="text" name="input-restaurant-ID" id="input-restaurant-ID" required>
+    <label for="input-dish-ID">DishID: </label>
+        <input type="text" name="input-dish-ID" id="input-dish-ID" required>
+    <input type="submit" value="Add RestaurantID & DishID">
+</form>
+<!-- Include your JavaScript to handle the AJAX request -->
+<!-- Link to the add_restaurantsDishes.js script -->
+<script src="/js/add_restaurantsDishes.js"></script>
+<p>&nbsp;</p> <!-- browse/add restaurants&dishes -->
+<div id="update" style="display: block">
+    <form id="update-RestaurantsDishes-form-ajax" method="POST" action="/put-restaurantDish-adax">
+        <legend><strong>Update Restaurants and Dishes</strong></legend>
+            <fieldset class="fields">
+            <!-- RestaurantDish Dropdown -->
+
+                <label for="input-RestaurantDishID-update"> RestaurantDishID: </label>
+                <select name="input-RestaurantDishID-update" id="input-RestaurantDishID-update">
+                    <option value="" disabled selected>Select a RestaurantDishID</option>
+                    {{#each data1}}
+                    <option value="{{this.RestaurantDishID}}">{{this.name}}</option>
+                    {{/each}}
+                </select>   
+
+                <!-- Restaurant Dropdown -->
+                <label for="input-RestaurantID-update">RestaurantID: </label>
+                <input type="number" name="input-RestaurantID-update" id="input-RestaurantID-update">
+
+                <!-- Dish Dropdown -->
+                <label for="input-DishID-update"> DishID: </label>
+                <input type="number" name="input-DishID-update" id="input-DishID-update">
+            </fieldset>
+
+    <!--  Buttons -->
+     <input type="submit">
+  </form> 
+<script src="./js/update_restaurantsDishes.js"></script>
+</div><!-- update RestaurantDish-->
+<p>&nbsp;</p>
+</body>
+</html>
